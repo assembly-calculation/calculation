@@ -48,8 +48,8 @@ body {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
           flex-direction: column;
-  width: 350px;
-  margin: 0 20px;
+   width: 358px;
+   margin: 0px 16px;
 }
 .form-main-field {
   display: -webkit-box;

@@ -87,7 +87,7 @@ function calcSmeltingIce() {
       X_out = 0.77*form.elements.I_l.value;
   
   var I_m2 = U_ph/(Math.sqrt(3*((Math.pow((R_t + R_g), 2)) + (Math.pow((X_in + X_out), 2)))));
-  resultBlockDesc.innerHTML = 'Сопротивление системы: ' + X_c.toFixed(3) + ' Ом <br>' + 'Сопротивление трансформатора: ' + X_tr.toFixed(3) + ' Ом <br>' + 'Сопротивление линии: ' + Z_l.toFixed(3) + ' Ом <br>' + 'Ток плавки гололёда на проводе: ' + I_m2.toFixed(3) + 'A <br>' + 'Время плавки гололёда: ' + T.toFixed(3) + ' мин <br>' + 'Ток плавки гололёда на тросе: ' + I_m2.toFixed(3) + ' A <br>';
+  resultBlockDesc.innerHTML = 'Сопротивление системы: ' + X_c.toFixed(3) + ' Ом <br>' + 'Сопротивление трансформатора: ' + X_tr.toFixed(3) + ' Ом <br>' + 'Сопротивление линии: ' + Z_l.toFixed(3) + ' Ом <br>' + 'Ток плавки гололёда на проводе: ' + I_m2.toFixed(3) + ' A <br>' + 'Время плавки гололёда: ' + T.toFixed(3) + ' мин <br>' + 'Ток плавки гололёда на тросе: ' + I_m2.toFixed(3) + ' A <br>';
   resultBlock.classList.add('show');
 }
 

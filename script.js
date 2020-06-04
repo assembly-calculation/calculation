@@ -50,33 +50,39 @@ function isInputValid() {
 
 function calcSmeltingIce() {
     //Сопротивление системы, приведенное к напряжению 10 кВ:
-    var U_avarage_rated_1 = 10.5,
-        U_avarage_rated_2 = 115,
-        I_short_circuit = 24.5;
+    var U_average_rated_1 = form.elements['U_average_rated_1'].value,
+        U_average_rated_2 = form.elements['U_average_rated_2'].value,
+        I_short_circuit = form.elements['U_k'].value;
 
-    var X_c = (U_avarage_rated_2 / ((Math.sqrt(3)) * I_short_circuit)) * (Math.pow((U_avarage_rated_1 / U_avarage_rated_2), 2));
+    var X_c = (U_average_rated_2 / ((Math.sqrt(3)) * I_short_circuit)) * (Math.pow((U_average_rated_1 / U_average_rated_2), 2));
 
     //Сопротивление трансформатора, приведенное к напряжению 10 кВ:
 
-    var U_k = 10.5,
-        S_t_rated = 63;
+    var U_k = form.elements['U_k'].value,
+        S_t_rated = form.elements['S_t_rated'].value;
 
-    var X_tr = (U_k / 100) * (Math.pow((U_avarage_rated_2) / S_t_rated), 2) * (Math.pow((U_avarage_rated_1 / U_avarage_rated_2), 2));
+    var X_tr = (U_k / 100) * (Math.pow(U_average_rated_2, 2) / S_t_rated) * (Math.pow((U_average_rated_1 / U_average_rated_2), 2));
 
     //Сопротивление
     var Z_l = form.elements.I_l.value * (Math.sqrt(Math.pow(form.elements.x0.value, 2) + Math.pow(form.elements.r0.value, 2)));
 
     //Ток плавки гололёда
 
-    var I_m = U_avarage_rated_1 / ((Math.sqrt(3)) * (X_c + Z_l + X_tr));
+    var I_m = U_average_rated_1 / ((Math.sqrt(3)) * (X_c + Z_l + X_tr));
 
     //Время плавки гололёда
     var R_20 = 0.00012;
     var Y = 0.9;
-    var D = form.elements.d.value + form.elements.b.value;
-    var SUM = (0.462 * 6.1 * form.elements.S_st.value + 0.92 * 2.07 * form.elements.S_al.value) * (20 + form.elements.t.value);
+    var d = form.elements.d.value;
+    var b = form.elements.b.value;
+    var S_st = form.elements.S_st.value;
+    var S_al = form.elements.S_al.value;
+    var t = form.elements.t.value;
+    var V = form.elements.V.value;
+    var D = d + b;
+    var SUM = (0.462 * 6.1 * S_st + 0.92 * 2.07 * S_al) * (20 + t);
 
-    var T = (36.4 * Y * form.elements.d.value * (form.elements.b.value + 0.265 * form.elements.d.value) * 1000 + 164 * Y * (Math.pow((form.elements.d.value * D), 2)) * form.elements.t.value + SUM) / ((Math.pow((I_m * 1000), 2)) * R_20 - (0.09 * D + 1.1 * (Math.sqrt(form.elements.d.value * form.elements.V.value))) * form.elements.t.value);
+    var T = (36.4 * Y * d * (b + 0.265 * d) * 1000 + 164 * Y * (Math.pow((d * D), 2)) * t + SUM) / ((Math.pow((I_m * 1000), 2)) * R_20 - (0.09 * D + 1.1 * (Math.sqrt(d * V))) * t);
 
     T = T / 60;
 
@@ -85,9 +91,10 @@ function calcSmeltingIce() {
 
     var U_ph = 10000,
         R_g = 0.05,
-        R_t = 4.05 * form.elements.I_l.value,
-        X_in = 2.07 * form.elements.I_l.value,
-        X_out = 0.77 * form.elements.I_l.value;
+        I_l = form.elements.I_l.value,
+        R_t = 4.05 * I_l,
+        X_in = 2.07 * I_l,
+        X_out = 0.77 * I_l;
 
     var I_m2 = U_ph / (Math.sqrt(3 * ((Math.pow((R_t + R_g), 2)) + (Math.pow((X_in + X_out), 2)))));
     resultBlockDesc.innerHTML = 'Сопротивление системы: ' + X_c.toFixed(3) + ' Ом <br>' + 'Сопротивление трансформатора: ' + X_tr.toFixed(3) + ' Ом <br>' + 'Сопротивление линии: ' + Z_l.toFixed(3) + ' Ом <br>' + 'Ток плавки гололёда на проводе: ' + I_m2.toFixed(3) + ' A <br>' + 'Время плавки гололёда: ' + T.toFixed(3) + ' мин <br>' + 'Ток плавки гололёда на тросе: ' + I_m2.toFixed(3) + ' A <br>';

@@ -4,7 +4,7 @@ body {
   background-size: cover;
   position: relative;
   box-sizing: border-box;
-  padding: 16px;
+  padding: 32px 16px 16px 16px;
   width: 100%;
   min-height: 100vh;
 }
@@ -34,8 +34,9 @@ body::before {
   width: 100%;
   max-width: 800px;
   min-width: 400px;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
 }
+
 
 .wrapper .mdl-textfield {
   width: 100%;
@@ -64,11 +65,9 @@ body::before {
   font-size: 13px;
   line-height: 18px;
   /*overflow: hidden;*/
-  padding: 32px 10px 16px 10px;
+  padding: 16px 10px;
 }
-.form-header {
-  border-radius: 8px 8px 0 0;
-}
+
 .form-header__title {
   text-align: center;
   margin: 0;
@@ -82,10 +81,11 @@ body::before {
   display: block;
   width: 100%;
   text-align: center;
-  margin: 0 0 16px 0;
+  margin: 16px 0;
   padding: 0;
   font-size: 18px;
   line-height: 20px;
+  color: #101217;
 }
 
 .form-part {
@@ -154,11 +154,16 @@ body::before {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #dffaff;
+  background: #ffffff;
   border-radius: 8px;
   box-shadow: 2px 1px 6px 0 #000000;
-  min-width: 240px;
-  min-height: 120px;
+  width: 400px;
+  height: 140px;
+  padding: 8px;
+}
+
+.info-popup img {
+  max-width: 100%;
 }
 
 .form-content .mdl-textfield__label {
@@ -171,6 +176,17 @@ body::before {
   flex-wrap: wrap;
   width: 100%;
   color: #101217;
+  transition: max-height .25s linear;
+}
+
+.form-main-field[data-form-field-state="hide"] {
+  max-height: 0;
+  opacity: 0;
+}
+
+.form-main-field[data-form-field-state="show"] {
+  max-height: 200px;
+  opacity: 1;
 }
 
 .form-footer {
@@ -250,8 +266,11 @@ body::before {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
+  padding: 32px;
 }
-
+.form-table img {
+  max-width: 100%;
+}
 .form-button--success {
   background: rgb(75, 175, 79);
 }

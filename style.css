@@ -146,11 +146,13 @@ body::before {
   cursor: pointer;
 }
 .form-part__radio__info .info-icon:hover+.info-popup {
-  display: block;
+  display: flex;
+  align-items: center;
 }
 .form-part__radio__info .info-popup {
   display: none;
   position: absolute;
+  z-index: 10;
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);

@@ -64,9 +64,9 @@ function calcSmeltingIce() {
     var U_average_rated_1 = parseFloat(form.elements['U_average_rated_1'].value),
         U_average_rated_2 = parseFloat(form.elements['U_average_rated_2'].value),
         I_short_circuit = parseFloat(form.elements['I_short_circuit'].value),
-        X_0 = parseFloat(form.elements.x0.value),
-        R_0 = parseFloat(form.elements.r0.value),
-        L_l = parseFloat(form.elements.L_l.value);
+        L_l = parseFloat(form.elements.L_l.value),
+        X_0 = parseFloat(form.elements.x0.value)*L_l,
+        R_0 = parseFloat(form.elements.r0.value)*L_l;
 
     var X_c = (U_average_rated_2 / ((Math.sqrt(3)) * I_short_circuit)) * (Math.pow((U_average_rated_1 / U_average_rated_2), 2));
 
@@ -89,17 +89,18 @@ function calcSmeltingIce() {
 
         switch (schema) {
             case '1' : {
-                var Z_0 = Math.sqrt(Math.pow(X_0, 2) + Math.pow((R_0 + R_ground + R_grounding), 2));
-                Z_schema_wire = (Math.sqrt(3)) * Z_0;
+                var Z_l = Math.sqrt(Math.pow(X_0, 2) + Math.pow((R_0 + R_ground + R_grounding), 2));
+                Z_schema_wire = (Math.sqrt(3)) * Z_l;
+                break;
             }
             case '2' :
             case '3' : {
-                var Z_0 = Math.sqrt(Math.pow(X_0, 2) + Math.pow(R_0, 2));
-                var Z_l = L_l * Z_0;
+                var Z_l = Math.sqrt(Math.pow(X_0, 2) + Math.pow(R_0, 2));
                 var Z = X_c + Z_l + X_tr;
                 parseFloat(schema) === 2
                     ? Z_schema_wire = 2 * Z
                     : Z_schema_wire = (Math.sqrt(3)) * Z;
+                break;
             }
             default: break;
         }
@@ -118,7 +119,7 @@ function calcSmeltingIce() {
         var V = parseFloat(form.elements.V.value);
         var D = d + b;
         var SUM = (0.462 * 6.1 * S_st + 0.92 * 2.07 * S_al) * (20 + t);
-debugger;
+
         var T = (36.4 * Y * d * (b + 0.265 * d) * 1000 + 164 * Y * (Math.pow((d * D), 2)) * t + SUM) / ((Math.pow((I_melt_wire * 1000), 2)) * R_20 - (0.09 * D + 1.1 * (Math.sqrt(d * V))) * t);
 
         T = T / 60;
@@ -133,35 +134,33 @@ debugger;
     var Z_equivalent;
 
     if (parseFloat(schema) >= 4) {
-        var X_inductive_out = parseFloat(form.elements['X_inductive_out'].value);
-        var X_inductive_in = parseFloat(form.elements['X_inductive_in'].value);
-        var R_rope_t = parseFloat(form.elements['R_rope_active'].value);
+        var X_inductive_out = parseFloat(form.elements['X_inductive_out'].value)*L_l;
+        var X_inductive_in = parseFloat(form.elements['X_inductive_in'].value)*L_l;
+        var R_rope_t = parseFloat(form.elements['R_rope_active'].value)*L_l;
         var U_ph = (U_average_rated_1 * 1000)/1.05;
 
         switch (schema) {
             case '4' : {
-                Z_equivalent = Math.sqrt(Math.pow((R_rope_t + R_ground * L_l), 2) + Math.pow((X_inductive_out + X_inductive_in), 2));
-                I_melt_rope = U_ph / (Z_equivalent + R_grounding);
+                Z_equivalent = Math.sqrt(Math.pow((R_rope_t + R_ground * L_l), 2) + Math.pow((X_inductive_out + X_inductive_in), 2)) + R_grounding;
                 break;
             }
             case '5' : {
                 Z_equivalent = 2 * (Math.sqrt(Math.pow(R_rope_t, 2) + Math.pow((X_inductive_out + X_inductive_in), 2)));
-                I_melt_rope = U_ph / Z_equivalent;
                 break;
             }
             case '6' : {
-                Z_equivalent = Math.sqrt(Math.pow((R_rope_t / 2 + R_ground * L_l), 2) + Math.pow((X_inductive_out / 2 + X_inductive_in / 2), 2));
-                I_melt_rope = U_ph / (Z_equivalent + R_grounding);
+                Z_equivalent = Math.sqrt(Math.pow((R_rope_t / 2 + R_ground * L_l), 2) + Math.pow((X_inductive_out / 2 + X_inductive_in / 2), 2))  + R_grounding;
                 break;
             }
             case '7' : {
                 Z_equivalent = 2 * (Math.sqrt(Math.pow(R_rope_t, 2) + Math.pow((X_inductive_out + X_inductive_in), 2)));
-                I_melt_rope = U_ph / Z_equivalent;
                 break;
             }
             default:
                 break;
         }
+
+        I_melt_rope = U_ph / Z_equivalent;
 
     //Расчёт времени плавки гололёда на тросе ВЛ
 
@@ -198,8 +197,6 @@ resetBtn && resetBtn.addEventListener('click', resetForm);
 infoBtn && infoBtn.addEventListener('click', function () {togglePopupState('open')});
 closeBtn && closeBtn.addEventListener('click', function () {togglePopupState('close')});
 form && form.addEventListener('change', function (e) {
-    console.log(e.target.dataset);
-
     switch (e.target.dataset.schemaType) {
         case 'rope' : {
             fieldsForRope[0].dataset.formFieldState = 'show';

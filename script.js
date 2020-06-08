@@ -149,7 +149,7 @@ function calcSmeltingIce() {
                 break;
             }
             case '6' : {
-                Z_equivalent = Math.sqrt(Math.pow((R_rope_t / 2 + R_ground * L_l), 2) + Math.pow((X_inductive_out / 2 + X_inductive_in / 2), 2))  + R_grounding;
+                Z_equivalent = Math.sqrt(Math.pow(((R_rope_t / 2) + (R_ground * L_l)), 2) + Math.pow(((X_inductive_out + X_inductive_in) / 2), 2)) + R_grounding;
                 break;
             }
             case '7' : {

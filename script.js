@@ -164,7 +164,7 @@ function calcSmeltingIce() {
 
     //Расчёт времени плавки гололёда на тросе ВЛ
 
-        resultText += '<div class="result-block__section">Ток плавки голоеда на тросе: ' + I_melt_rope.toFixed(3) + '</div>';
+        resultText += '<div class="result-block__section">Ток плавки гололеда на тросе: ' + I_melt_rope.toFixed(3) + ' кA</div>';
     }
 
     //Вывод данных

@@ -206,65 +206,68 @@
                 <h3 class="form-header__sub-title">
                     Введите дополнительные данные для стального троса
                 </h3>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="X_inductive_out"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Сечение троса (мм<sup>2</sup>)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                <div class="form-part">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
+                               name="X_inductive_out"
+                               tabindex="1">
+                        <label class="mdl-textfield__label">Внешнее индуктивное сопротивление (Ом/км)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
+                               name="X_inductive_in"
+                               tabindex="1">
+                        <label class="mdl-textfield__label">Внутренее индуктивное сопротивление (Ом/км)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
                 </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="X_inductive_out"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Внешнее индуктивное сопротивлене (Ом/км)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="X_inductive_in"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Внутренее индуктивное сопротивлене (Ом/км)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="R_rope_active"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Активное сопротивлене (Ом/км)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                <div class="form-part">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
+                               name="R_rope_active"
+                               tabindex="1">
+                        <label class="mdl-textfield__label">Активное сопротивление (Ом/км)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
                 </div>
             </div>
             <div class="form-main-field fields-for-wire" data-form-field-state="hide">
                 <h3 class="form-header__sub-title">
                     Введите дополнительные данные для провода
                 </h3>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_al"
-                           tabindex="2">
-                    <label class="mdl-textfield__label">Сечение алюминиевой части провода (см<sup>2</sup>)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
+                <div class="form-part">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_al"
+                               tabindex="2">
+                        <label class="mdl-textfield__label">Сечение алюминиевой части провода (см<sup>2</sup>)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_st"
-                           tabindex="2">
-                    <label class="mdl-textfield__label">Сечение стальной части провода
-                        (см<sup>2</sup>)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_st"
+                               tabindex="2">
+                        <label class="mdl-textfield__label">Сечение стальной части провода
+                            (см<sup>2</sup>)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
                 </div>
+                <div class="form-part">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="r0"
+                               tabindex="2">
+                        <label class="mdl-textfield__label">Активное сопротивление 1 км провода (Ом)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="r0"
-                           tabindex="2">
-                    <label class="mdl-textfield__label">Активное сопротивление 1 км провода (Ом)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="x0"
+                               tabindex="2">
+                        <label class="mdl-textfield__label">Индуктивное сопротивление 1 км провода
+                            (Ом)</label>
+                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                    </div>
                 </div>
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="x0"
-                           tabindex="2">
-                    <label class="mdl-textfield__label">Индуктивное сопротивление 1 км провода
-                        (Ом)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-
             </div>
             <div class="form-footer">
                 <input id="form-button-success" type="button" class="form-button form-button--success"

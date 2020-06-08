@@ -41,7 +41,7 @@ body::before {
 .wrapper .mdl-textfield {
   width: 100%;
   max-width: 358px;
-  margin:0 auto;
+  margin:0;
   padding: 16px 0;
 }
 

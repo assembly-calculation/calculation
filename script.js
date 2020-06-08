@@ -135,7 +135,7 @@ debugger;
     if (parseFloat(schema) >= 4) {
         var X_inductive_out = parseFloat(form.elements['X_inductive_out'].value);
         var X_inductive_in = parseFloat(form.elements['X_inductive_in'].value);
-        var R_rope_t = parseFloat(form.elements['X_inductive_in'].value);
+        var R_rope_t = parseFloat(form.elements['R_rope_active'].value);
         var U_ph = (U_average_rated_1 * 1000)/1.05;
 
         switch (schema) {

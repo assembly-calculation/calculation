@@ -17,13 +17,13 @@ body::before {
   width: 100%;
   top: 0;
   left: 0;
-  background: rgba(11, 54, 62, 0.56);
+  background: #090804bf;
 }
 
 .wrapper {
   position: relative;
   box-sizing: border-box;
-  margin-bottom: 300px;
+  margin-bottom: 100px;
 }
 
 .wrapper .mdl-card{
@@ -47,8 +47,9 @@ body::before {
 
 .mdl-textfield input {
   box-shadow: none;
-  line-height: 1.5;
-  font-size: 12px;
+  line-height: 1;
+  font-size: 14px;
+  padding: 8px 0 2px;
 }
 
 .wrapper .mdl-textfield__label:after {
@@ -169,25 +170,28 @@ body::before {
 }
 
 .form-content .mdl-textfield__label {
+  top: 20px;
   color: rgba(0, 0, 0, 0.5);
+  line-height: 20px;
 }
 
 .form-main-field {
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   color: #101217;
-  transition: max-height .25s linear;
+  transition: opacity .25s linear;
 }
 
 .form-main-field[data-form-field-state="hide"] {
-  max-height: 0;
+  position: absolute;
   opacity: 0;
+  transition: opacity 0s linear;
 }
 
 .form-main-field[data-form-field-state="show"] {
-  max-height: 200px;
   opacity: 1;
 }
 
@@ -217,6 +221,83 @@ body::before {
   font-size: 16px;
   cursor: pointer;
 }
+
+.form-select {
+  width: 100%;
+  max-width: 358px;
+  padding: 0;
+  margin: 18px 0 16px;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  box-shadow: none;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #8f878f;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  background: url(./assets/img/selectarrlight.png) no-repeat right 8px center;
+  background-size: 10px;
+}
+
+.select-block {
+  position: relative;
+}
+
+.select-block-label {
+  display: block;
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  line-height: 20px;
+  pointer-events: none;
+  -webkit-transition-duration: .2s;
+  transition-duration: .2s;
+  -webkit-transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+
+.select-block-label::after {
+  content: '';
+  background-color: rgb(0,188,212);
+  position: absolute;
+  bottom: 16px;
+  left: 45%;
+  height: 2px;
+  -webkit-transition-duration: .2s;
+  transition-duration: .2s;
+  -webkit-transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  visibility: hidden;
+  width: 10px;
+}
+
+.form-select:focus~.select-block-label::after {
+  left: 0;
+  visibility: visible;
+  width: 100%;
+}
+
+.form-select:focus~.select-block-label {
+  color: rgb(0,188,212);
+  font-size: 12px;
+  top: 4px;
+  visibility: visible;
+}
+
+.form-select:valid~.select-block-label {
+  color: transparent;
+}
+
 .form-popup {
   position: absolute;
   top: 0;
@@ -309,6 +390,16 @@ body::before {
 .cyan {
     color:#FFFFFF;
     background: rgb(0, 188, 212);
+}
+
+.status-error {
+  background: #de3226;
+  color: #ffffff;
+}
+
+.status-success {
+  background: #4BAF4FFF;
+  color: #ffffff;
 }
 
 .result-block {

@@ -3,6 +3,7 @@
 var form = document.getElementById('form-data');
 var popup = document.getElementById('form-info');
 var resultBlock = document.getElementById('form-results');
+var resultBlockHeader = document.getElementById('form-results-header');
 var resultBlockDesc = document.getElementById('form-results-desc');
 var resetBtn = document.getElementById('form-button-reset');
 var successBtn = document.getElementById('form-button-success');
@@ -13,13 +14,43 @@ var fieldsForRope = document.getElementsByClassName('fields-for-rope');
 var fieldsForWire = document.getElementsByClassName('fields-for-wire');
 var inputFields = document.getElementsByClassName('mdl-textfield');
 var inputs = document.getElementsByClassName('mdl-textfield__input');
+var selects = document.getElementsByClassName('form-select');
 
 //handlers
 
+
+function isInputValid() {
+    for (var i = 0; i <= inputs.length - 1; i++) {
+        var isSecondInputRopeInvalid = inputs[i].value.length === 0 && fieldsForRope[0].contains(inputFields[i]) && fieldsForRope[0].dataset.formFieldState === 'show';
+        var isSecondInputWireInvalid = inputs[i].value.length === 0 && fieldsForWire[0].contains(inputFields[i]) && fieldsForWire[0].dataset.formFieldState === 'show';
+        if ((!form.elements.schema.value.length) || (inputFields[i].classList.contains('is-invalid')) || isSecondInputRopeInvalid || isSecondInputWireInvalid) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function isSelectValid() {
+    for (var i = 0; i <= selects.length - 1; i++) {
+        if (!selects[i].value.length) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isFormValid() {
+    return isInputValid() && isSelectValid();
+}
+
 function calcForm() {
-    isInputValid()
-        ? calcSmeltingIce()
-        : toggleErrorState('block')
+    if (isFormValid()) {
+        toggleErrorState('none');
+        calcCablePullingForces();
+    } else {
+        toggleErrorState('block');
+    }
 }
 
 function toggleErrorState(state) {
@@ -36,139 +67,73 @@ function resetForm() {
     toggleErrorState('none');
 }
 
-function isInputValid() {
-
-    for (var i = 0; i <= inputs.length - 1; i++) {
-        var isSecondInputRopeInvalid = inputs[i].value.length === 0 && fieldsForRope[0].contains(inputFields[i]) && fieldsForRope[0].dataset.formFieldState === 'show';
-        var isSecondInputWireInvalid = inputs[i].value.length === 0 && fieldsForWire[0].contains(inputFields[i]) && fieldsForWire[0].dataset.formFieldState === 'show';
-        if ((!form.elements.schema.value.length) || (inputFields[i].classList.contains('is-invalid')) || isSecondInputRopeInvalid || isSecondInputWireInvalid) {
-            return false;
-        }
-    }
-    toggleErrorState('none');
-    return true;
-}
-
 //Функция рассчета
 
-function calcSmeltingIce() {
+function calcCablePullingForces() {
 
     // Изначальные значения
 
     var resultText = '';
-    var R_ground = 0.05;
-    var R_grounding = 4;
+    var R_dop_kof = 15;
+    var g = 9.81;
+    var GradToRadian = Math.PI / 180;
 
-    //Сопротивление системы, приведенное к низшему напряжению 10 кВ:
+    var S_cab = parseFloat(form.elements['S_cab'].value),
+        D_cab = parseFloat(form.elements['S_cab'].value),
+        M_cab = parseFloat(form.elements['M_cab'].value),
+        L_cab = parseFloat(form.elements['L_cab'].value),
+        F_prev = parseFloat(form.elements['F_prev'].value),
+        Z_method = parseFloat(form.elements['Z_method'].value),
+        Z_material = parseFloat(form.elements['Z_material'].value),
+        Bet,
+        Alf,
+        Rad_izg;
 
-    var U_average_rated_1 = parseFloat(form.elements['U_average_rated_1'].value),
-        U_average_rated_2 = parseFloat(form.elements['U_average_rated_2'].value),
-        I_short_circuit = parseFloat(form.elements['I_short_circuit'].value),
-        L_l = parseFloat(form.elements.L_l.value),
-        X_0 = parseFloat(form.elements.x0.value)*L_l,
-        R_0 = parseFloat(form.elements.r0.value)*L_l;
+    //Общие рассчеты для проектного кабеля
 
-    var X_c = (U_average_rated_2 / ((Math.sqrt(3)) * I_short_circuit)) * (Math.pow((U_average_rated_1 / U_average_rated_2), 2));
+    var F_dop = 50 * S_cab;
+    var R_dop = D_cab * R_dop_kof;
+    var G = M_cab * g;
 
-    //Сопротивление трансформатора, приведенное к низшему напряжению 10 кВ:
-
-    var U_k = parseFloat(form.elements['U_k'].value),
-        S_t_rated = parseFloat(form.elements['S_t_rated'].value);
-
-    var X_tr = (U_k / 100) * (Math.pow(U_average_rated_2, 2) / S_t_rated) * (Math.pow((U_average_rated_1 / U_average_rated_2), 2));
-
-    // Определение схемы плавки голеледа
+    // Расчет усилий тяжеления кабеля взависимости от типа участка трассы
 
     var schema = form.elements.schema.value;
+    var F;
+    var F_r;
 
-    if (parseFloat(schema) < 4) {
+    switch (schema) {
+        case 'ascent':
+            Bet = parseFloat(form.elements['Bet'].value) * GradToRadian;
+            F = F_prev + G * L_cab * (Z_method * Math.cos(Bet) + Math.sin(Bet));
+            break;
+        case 'descent':
+            Bet = parseFloat(form.elements['Bet'].value) * GradToRadian;
+            F = F_prev + G * L_cab * (Z_method * Math.cos(Bet) - Math.sin(Bet));
+            break;
+        case 'with-twist':
+            Alf = parseFloat(form.elements['Alf'].value);
+            F = F_prev * (Math.E ** (Alf * GradToRadian * Z_method));
+            Rad_izg = parseFloat(form.elements['Rad_izg'].value);
+            F_r = (F * Math.sin((Alf/2) * GradToRadian) ) / (Rad_izg * Math.PI * (Alf / 360))
+            break;
+        case 'default':
+            F = F_prev + G * L_cab * Z_method;
+            break;
 
-    //Ток плавки гололёда на проводе
-
-        var Z_schema_wire;
-
-        switch (schema) {
-            case '1' : {
-                var Z_l = Math.sqrt(Math.pow(X_0, 2) + Math.pow((R_0 + R_ground + R_grounding), 2));
-                Z_schema_wire = (Math.sqrt(3)) * Z_l;
-                break;
-            }
-            case '2' :
-            case '3' : {
-                var Z_l = Math.sqrt(Math.pow(X_0, 2) + Math.pow(R_0, 2));
-                var Z = X_c + Z_l + X_tr;
-                parseFloat(schema) === 2
-                    ? Z_schema_wire = 2 * Z
-                    : Z_schema_wire = (Math.sqrt(3)) * Z;
-                break;
-            }
-            default: break;
-        }
-
-        var I_melt_wire = U_average_rated_1 / Z_schema_wire;
-
-    //Расчёт времени плавки гололёда на проводе
-
-        var R_20 = 0.00012;
-        var Y = 0.9;
-        var d = parseFloat(form.elements.d.value);
-        var b = parseFloat(form.elements.b.value);
-        var S_st = parseFloat(form.elements.S_st.value);
-        var S_al = parseFloat(form.elements.S_al.value);
-        var t = parseFloat(form.elements.t.value);
-        var V = parseFloat(form.elements.V.value);
-        var D = d + b;
-        var SUM = (0.462 * 6.1 * S_st + 0.92 * 2.07 * S_al) * (20 + t);
-
-        var T = (36.4 * Y * d * (b + 0.265 * d) * 1000 + 164 * Y * (Math.pow((d * D), 2)) * t + SUM) / ((Math.pow((I_melt_wire * 1000), 2)) * R_20 - (0.09 * D + 1.1 * (Math.sqrt(d * V))) * t);
-
-        T = T / 60;
-
-        resultText += '<div class="result-block__section"><span>Ток плавки гололеда на проводе: </span>' + I_melt_wire.toFixed(3) + ' кA</div>';
-        resultText += '<div class="result-block__section"><span>Время плавки гололеда на проводе: </span>' + T.toFixed(3) + ' мин</div>';
-    }
-
-    //Ток плавки гололёда на тросе
-
-    var I_melt_rope;
-    var Z_equivalent;
-
-    if (parseFloat(schema) >= 4) {
-        var X_inductive_out = parseFloat(form.elements['X_inductive_out'].value)*L_l;
-        var X_inductive_in = parseFloat(form.elements['X_inductive_in'].value)*L_l;
-        var R_rope_t = parseFloat(form.elements['R_rope_active'].value)*L_l;
-        var U_ph = (U_average_rated_1 * 1000)/1.05;
-
-        switch (schema) {
-            case '4' : {
-                Z_equivalent = Math.sqrt(Math.pow((R_rope_t + R_ground * L_l), 2) + Math.pow((X_inductive_out + X_inductive_in), 2)) + R_grounding;
-                break;
-            }
-            case '5' : {
-                Z_equivalent = 2 * (Math.sqrt(Math.pow(R_rope_t, 2) + Math.pow((X_inductive_out + X_inductive_in), 2)));
-                break;
-            }
-            case '6' : {
-                Z_equivalent = Math.sqrt(Math.pow(((R_rope_t / 2) + (R_ground * L_l)), 2) + Math.pow(((X_inductive_out + X_inductive_in) / 2), 2)) + R_grounding;
-                break;
-            }
-            case '7' : {
-                Z_equivalent = 2 * (Math.sqrt(Math.pow(R_rope_t, 2) + Math.pow((X_inductive_out + X_inductive_in), 2)));
-                break;
-            }
-            default:
-                break;
-        }
-
-        I_melt_rope = U_ph / Z_equivalent;
-
-    //Расчёт времени плавки гололёда на тросе ВЛ
-
-        resultText += '<div class="result-block__section">Ток плавки гололеда на тросе: ' + I_melt_rope.toFixed(3) + ' A</div>';
+        default: break;
     }
 
     //Вывод данных
+    F = parseInt(F);
+    F_dop = parseInt(F_dop);
+    resultText += '<div class="result-block__section">Усилие тяжения на выходе из трассы для проектной кабельной линии: ' + F + ' H/м</div>';
+    resultText += '<div class="result-block__section">Допустимое значение усилия тяжения на выходе из трассы: ' + F_dop + ' H/м</div>';
 
+    if (F_r) {
+        resultText += '<div class="result-block__section">Радиальное давление: ' + F_r.toFixed(0) + ' H/м</div>';
+    }
+
+    resultBlockHeader.classList.add((F > 0 && (F_dop > F)) ? "status-success" : "status-error");
     resultBlockDesc.innerHTML = resultText;
     resultBlock.classList.add('show');
 }
@@ -198,13 +163,18 @@ infoBtn && infoBtn.addEventListener('click', function () {togglePopupState('open
 closeBtn && closeBtn.addEventListener('click', function () {togglePopupState('close')});
 form && form.addEventListener('change', function (e) {
     switch (e.target.dataset.schemaType) {
-        case 'rope' : {
+        case 'with-twist' : {
             fieldsForRope[0].dataset.formFieldState = 'show';
             fieldsForWire[0].dataset.formFieldState = 'hide';
             break
         }
-        case 'wire' : {
+        case 'ascent-descent' : {
             fieldsForWire[0].dataset.formFieldState = 'show';
+            fieldsForRope[0].dataset.formFieldState = 'hide';
+            break
+        }
+        case 'default' : {
+            fieldsForWire[0].dataset.formFieldState = 'hide';
             fieldsForRope[0].dataset.formFieldState = 'hide';
             break
         }

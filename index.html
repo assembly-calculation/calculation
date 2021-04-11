@@ -14,114 +14,45 @@
     <div class="mdl-card mdl-shadow--2dp animated slideInDown">
         <div class="form-header cyan">
             <h3 class="form-header__title">
-                Расчет тока и времени плавки гололеда на ВЛ
+                Расчет усилий тяжения кабеля
             </h3>
         </div>
         <form class="form-content" id="form-data">
             <span id="form-main-error" class="form-main-error">Введите все данные</span>
             <div class="form-main-field">
                 <h3 class="form-header__sub-title">
-                    Выберите схему плавки гололеда на:
+                    Выберите тип участка трассы:
                 </h3>
                 <div class="form-part">
-                    <p class="form-part__title">
-                        Проводах
-                    </p>
                     <div class="form-part__radio">
                         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-1">
                             <input type="radio" id="schema-1" class="mdl-radio__button" name="schema"
-                                   data-schema-type='wire' value="1">
-                            <span class="mdl-radio__label">Однофазное КЗ - схема "змейка"</span>
+                                   data-schema-type='default' value="default">
+                            <span class="mdl-radio__label">Прямой без разницы высот</span>
                         </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-wire-a.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
                     </div>
+                    <div class="form-part__radio">
+                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-4">
+                            <input type="radio" id="schema-4" class="mdl-radio__button" name="schema"
+                                   data-schema-type='with-twist' value="with-twist">
+                            <span class="mdl-radio__label">Поворот трассы</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-part">
                     <div class="form-part__radio">
                         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-2">
                             <input type="radio" id="schema-2" class="mdl-radio__button" name="schema"
-                                   data-schema-type='wire' value="2">
-                            <span class="mdl-radio__label">Двухфазное КЗ</span>
+                                   data-schema-type='ascent-descent' value="descent">
+                            <span class="mdl-radio__label">Прямой со спуском</span>
                         </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-wire-b.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
                     </div>
                     <div class="form-part__radio">
                         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-3">
                             <input type="radio" id="schema-3" class="mdl-radio__button" name="schema"
-                                   data-schema-type='wire' value="3">
-                            <span class="mdl-radio__label">Трехфазное КЗ</span>
+                                   data-schema-type='ascent-descent' value="ascent">
+                            <span class="mdl-radio__label">Прямой с подъемом</span>
                         </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-wire-c.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-part">
-                    <p class="form-part__title">
-                        Тросах
-                    </p>
-                    <div class="form-part__radio">
-                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-4">
-                            <input type="radio" id="schema-4" class="mdl-radio__button" name="schema"
-                                   data-schema-type='rope' value="4">
-                            <span class="mdl-radio__label">Схема для одного троса на линии</span>
-                        </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-rope-a.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-part__radio">
-                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-5">
-                            <input type="radio" id="schema-5" class="mdl-radio__button" name="schema"
-                                   data-schema-type='rope' value="5">
-                            <span class="mdl-radio__label">Схема плавки трос-трос</span>
-                        </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-rope-b.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-part__radio">
-                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-6">
-                            <input type="radio" id="schema-6" class="mdl-radio__button" name="schema"
-                                   data-schema-type='rope' value="6">
-                            <span class="mdl-radio__label">Схема плавки трос-земля</span>
-                        </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-rope-c.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-part__radio">
-                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="schema-7">
-                            <input type="radio" id="schema-7" class="mdl-radio__button" name="schema"
-                                   data-schema-type='rope' value="7">
-                            <span class="mdl-radio__label">Схема плавки два троса-земля</span>
-                        </label>
-                        <div class="form-part__radio__info">
-                            <i class="info-icon"></i>
-                            <p class="info-popup">
-                                <img src="./assets/img/schema-rope-d.png" alt="схема плавки гололеда">
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -130,161 +61,107 @@
             </h3>
             <div class="form-part">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="L_l"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Длина линии (км)</label>
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_cab" tabindex="1">
+                    <label class="mdl-textfield__label">Площадь сечения кабеля (мм<sup>2</sup>)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="d" tabindex="1">
-                    <label class="mdl-textfield__label">Диаметр провода без гололеда (см)</label>
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="D_cab" tabindex="1">
+                    <label class="mdl-textfield__label">Диаметр кабеля (мм)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?^[1-9][0-9]*(\.[0-9]+)?" name="b"
-                           tabindex="2">
-                    <label class="mdl-textfield__label">Толщина стенки гололеда (см)</label>
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="M_cab" tabindex="2">
+                    <label class="mdl-textfield__label">Удельная масса кабеля (кг/м)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="V" tabindex="2">
-                    <label class="mdl-textfield__label">Скорость ветра при гололёде (м/с)</label>
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="L_cab" tabindex="3">
+                    <label class="mdl-textfield__label">Длина участка трассы (м)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="t" tabindex="2">
-                    <label class="mdl-textfield__label">Абсолютная температура воздуха (°C)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-
             </div>
             <div class="form-part">
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
-                           name="U_average_rated_1"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Низшее номинальное напряжение (кВ)</label>
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="F_prev" tabindex="4">
+                    <label class="mdl-textfield__label">Предшествующее усилие тяжения (Н)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
-                           name="U_average_rated_2"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Высшее номинальное напряжение (кВ)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                <div class="select-block">
+                    <select class="form-select" id="core-material" name="Z_material" class="form-control" required tabindex="5">
+                        <option disabled="" selected="" value=""></option>
+                        <option value="50">Медь (&sigma; = 50 H/м)</option>
+                        <option value="30">Алюминий (&sigma; = 30 H/м)</option>
+                    </select>
+                    <div class="select-block-label">Материал токопроводящей жилы</div>
                 </div>
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="I_short_circuit"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Ток короткого замыкания (кА)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                <div class="select-block">
+                    <select class="form-select" id="way-of-laying" name="Z_method" class="form-control" required tabindex="6">
+                        <option disabled="" selected="" value=""></option>
+                        <option value="0.1">В пластм. трубах со смазой и водой (&#956; = 0.1)</option>
+                        <option value="0.15">В пластм. трубах со смазкой (&#956; = 0.15)</option>
+                        <option value="0.2">В пластм. трубах с проливанием воды (&#956; = 0.2)</option>
+                        <option value="0.2">По роликам (&#956; = 0.2)</option>
+                        <option value="0.5">В бетонных блоках (&#956; = 0.5)</option>
+                    </select>
+                    <div class="select-block-label">Способ прокладки кабеля</div>
                 </div>
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="U_k"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Напряжение к.з. трансформатора (%)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_t_rated"
-                           tabindex="1">
-                    <label class="mdl-textfield__label">Номинальная мощность тр-ра (МВА)</label>
-                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                </div>
-
             </div>
+
             <div class="form-main-field fields-for-rope" data-form-field-state="hide">
                 <h3 class="form-header__sub-title">
-                    Введите дополнительные данные для стального троса
+                    Введите дополнительные данные
                 </h3>
                 <div class="form-part">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
-                               name="X_inductive_out"
-                               tabindex="1">
-                        <label class="mdl-textfield__label">Внешнее индуктивное сопротивление (Ом/км)</label>
-                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
-                               name="X_inductive_in"
-                               tabindex="1">
-                        <label class="mdl-textfield__label">Внутреннее индуктивное сопротивление (Ом/км)</label>
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="Rad_izg">
+                        <label class="mdl-textfield__label">Радиус изгиба (м)</label>
                         <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                     </div>
                 </div>
+
                 <div class="form-part">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?"
-                               name="R_rope_active"
-                               tabindex="1">
-                        <label class="mdl-textfield__label">Активное сопротивление (Ом/км)</label>
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="Alf">
+                        <label class="mdl-textfield__label">Угол поворота (град)</label>
                         <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                     </div>
                 </div>
             </div>
             <div class="form-main-field fields-for-wire" data-form-field-state="hide">
                 <h3 class="form-header__sub-title">
-                    Введите дополнительные данные для провода
+                    Введите дополнительные данные
                 </h3>
                 <div class="form-part">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_al"
-                               tabindex="2">
-                        <label class="mdl-textfield__label">Сечение алюминиевой части провода (см<sup>2</sup>)</label>
-                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                    </div>
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="S_st"
-                               tabindex="2">
-                        <label class="mdl-textfield__label">Сечение стальной части провода
-                            (см<sup>2</sup>)</label>
-                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                    </div>
-                </div>
-                <div class="form-part">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="r0"
-                               tabindex="2">
-                        <label class="mdl-textfield__label">Активное сопротивление 1 км провода (Ом)</label>
-                        <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
-                    </div>
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="x0"
-                               tabindex="2">
-                        <label class="mdl-textfield__label">Индуктивное сопротивление 1 км провода
-                            (Ом)</label>
+                        <input class="mdl-textfield__input" type="text" pattern="-?^[1-9][0-9]*(\.[0-9]+)?" name="Bet">
+                        <label class="mdl-textfield__label">Угол наклона трассы (град)</label>
                         <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                     </div>
                 </div>
             </div>
+
             <div class="form-footer">
                 <input id="form-button-success" type="button" class="form-button form-button--success"
                        value="Рассчитать"/>
                 <input id="form-button-reset" type="reset" class="form-button" value="Сбросить"/>
 <!--                <input id="form-button-info" type="button" class="form-button" value="Информация"/>-->
             </div>
+
         </form>
     </div>
+
     <div id="form-results" class="result-block">
         <div class="mdl-card mdl-shadow--2dp">
-            <div class="form-header cyan">
-                <h3 class="form-header__title" id="form-results-title">Результат</h3>
+            <div class="form-header" id="form-results-header">
+                <h3 class="form-header__title">Результат</h3>
             </div>
-            <div class="result-block__total" id="form-results-desc">
-                Допустимый ток
-            </div>
+            <div class="result-block__total" id="form-results-desc"></div>
         </div>
     </div>
     <div class="form-popup" id="form-info">

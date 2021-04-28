@@ -78,13 +78,63 @@ function calcCablePullingForces() {
     var g = 9.81;
     var GradToRadian = Math.PI / 180;
 
+    var drumNumbers = {
+        '8': {
+            D_sh: 800,
+            l_sh: 230,
+            d_sh: 450
+        },
+        '8a': {
+            D_sh: 800,
+            l_sh: 400,
+            d_sh: 450
+        },
+        '8b': {
+            D_sh: 800,
+            l_sh: 500,
+            d_sh: 450
+        },
+        '10': {
+            D_sh: 1000,
+            l_sh: 500,
+            d_sh: 545
+        },
+        '12': {
+            D_sh: 1220,
+            l_sh: 500,
+            d_sh: 650
+        },
+        '12a': {
+            D_sh: 1220,
+            l_sh: 710,
+            d_sh: 650
+        },
+        '14': {
+            D_sh: 1400,
+            l_sh: 710,
+            d_sh: 750
+        },
+        '14a': {
+            D_sh: 1400,
+            l_sh: 500,
+            d_sh: 900
+        },
+        '14b': {
+            D_sh: 1400,
+            l_sh: 600,
+            d_sh: 1000
+        }
+    };
+
     var S_cab = parseFloat(form.elements['S_cab'].value),
-        D_cab = parseFloat(form.elements['S_cab'].value),
+        D_cab = parseFloat(form.elements['D_cab'].value),
         M_cab = parseFloat(form.elements['M_cab'].value),
         L_cab = parseFloat(form.elements['L_cab'].value),
         F_prev = parseFloat(form.elements['F_prev'].value),
         Z_method = parseFloat(form.elements['Z_method'].value),
         Z_material = parseFloat(form.elements['Z_material'].value),
+        D_n = parseFloat(form.elements['D_n'].value),
+        drum_number = parseFloat(form.elements['drum_number'].value),
         Bet,
         Alf,
         Rad_izg;
@@ -123,11 +173,21 @@ function calcCablePullingForces() {
         default: break;
     }
 
+    //Расчет длины намотанного кабеля
+
+    var {D_sh, d_sh, l_sh} = drumNumbers[drum_number];
+
+    var L_n = Math.PI * l_sh * ((D_n ** 2 - d_sh ** 2) / (1000 * 4 * D_cab ** 2));
+
+    var L_max = Math.PI * l_sh * ((((D_sh - 100)**2 - d_sh**2) * 0.85)/(1000 * 4 * D_cab ** 2));
+
     //Вывод данных
     F = parseInt(F);
     F_dop = parseInt(F_dop);
     resultText += '<div class="result-block__section">Усилие тяжения на выходе из трассы для проектной кабельной линии: ' + F + ' H/м</div>';
     resultText += '<div class="result-block__section">Допустимое значение усилия тяжения на выходе из трассы: ' + F_dop + ' H/м</div>';
+    resultText += '<div class="result-block__section">Длина намотанного на барабан кабеля: ' + L_n.toFixed(2) + ' м</div>';
+    resultText += '<div class="result-block__section">Максимальная длина намотки кабеля : ' + L_max.toFixed(2) + ' м</div>';
 
     if (F_r) {
         resultText += '<div class="result-block__section">Радиальное давление: ' + F_r.toFixed(0) + ' H/м</div>';

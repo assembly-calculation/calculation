@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>calculation</title>
@@ -83,17 +83,23 @@
                     <label class="mdl-textfield__label">Длина участка трассы (м)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="D_n" tabindex="4">
+                    <label class="mdl-textfield__label">Диаметр по намотанному кабелю, (мм)</label>
+                    <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
+                </div>
             </div>
             <div class="form-part">
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="F_prev" tabindex="4">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="F_prev" tabindex="5">
                     <label class="mdl-textfield__label">Предшествующее усилие тяжения (Н)</label>
                     <span class="mdl-textfield__error">Значение должно быть больше нуля и не содержать буквы</span>
                 </div>
 
                 <div class="select-block">
-                    <select class="form-select" id="core-material" name="Z_material" class="form-control" required tabindex="5">
+                    <select class="form-select" id="core-material" name="Z_material" class="form-control" required tabindex="6">
                         <option disabled="" selected="" value=""></option>
                         <option value="50">Медь (&sigma; = 50 H/м)</option>
                         <option value="30">Алюминий (&sigma; = 30 H/м)</option>
@@ -101,7 +107,7 @@
                     <div class="select-block-label">Материал токопроводящей жилы</div>
                 </div>
                 <div class="select-block">
-                    <select class="form-select" id="way-of-laying" name="Z_method" class="form-control" required tabindex="6">
+                    <select class="form-select" id="way-of-laying" name="Z_method" class="form-control" required tabindex="7">
                         <option disabled="" selected="" value=""></option>
                         <option value="0.1">В пластм. трубах со смазой и водой (&#956; = 0.1)</option>
                         <option value="0.15">В пластм. трубах со смазкой (&#956; = 0.15)</option>
@@ -110,6 +116,21 @@
                         <option value="0.5">В бетонных блоках (&#956; = 0.5)</option>
                     </select>
                     <div class="select-block-label">Способ прокладки кабеля</div>
+                </div>
+                <div class="select-block">
+                    <select class="form-select" id="drum-number" name="drum_number" class="form-control" required tabindex="8">
+                        <option disabled="" selected="" value=""></option>
+                        <option value="8">8</option>
+                        <option value="8a">8а</option>
+                        <option value="8b">8б</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                        <option value="12a">12а</option>
+                        <option value="14">14</option>
+                        <option value="14a">14а</option>
+                        <option value="14b">14б</option>
+                    </select>
+                    <div class="select-block-label">Номер барабана</div>
                 </div>
             </div>
 

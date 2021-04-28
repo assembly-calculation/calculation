@@ -287,15 +287,12 @@ body::before {
   width: 100%;
 }
 
-.form-select:focus~.select-block-label {
+.form-select:focus~.select-block-label,
+.form-select:valid~.select-block-label {
   color: rgb(0,188,212);
   font-size: 12px;
   top: 4px;
   visibility: visible;
-}
-
-.form-select:valid~.select-block-label {
-  color: transparent;
 }
 
 .form-popup {
